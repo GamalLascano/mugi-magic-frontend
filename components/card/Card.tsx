@@ -51,7 +51,7 @@ const Card = (card: Props) => {
               </span>
 
               <button className="flex ml-auto text-white bg-slate-500 border-0 py-2 px-5 focus:outline-none hover:bg-slate-600 rounded">
-                <Link href={card.data!.scryfall_uri}>Ver en Scryfall</Link>
+                <a href={card.data!.scryfall_uri} target="_blank" rel='noreferrer'>Ver en Scryfall</a>
               </button>
             </div>
             <div className="flex mb-5">
