@@ -1,3 +1,5 @@
+import SFManaRequest from "./SFManaRequest";
+
 type ScryfallRequest = {
   object: string;
   id: string;
@@ -16,6 +18,7 @@ type ScryfallRequest = {
     png: string;
   };
   mana_cost: string;
+  mana_array: SFManaRequest;
   cmc: number;
   type_line: string;
   oracle_text: string;
