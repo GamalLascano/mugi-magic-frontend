@@ -5,6 +5,7 @@ import ScryfallRequest from "../types/ScryfallRequest";
 import Props from "../types/Props";
 import SFManaRequest from "../types/SFManaRequest";
 import Image from "next/image";
+import MoonLoader from "react-spinners/MoonLoader";
 
 export default function Home() {
   const [cardData, setCardData] = useState<Props | undefined>(undefined);
@@ -42,7 +43,7 @@ export default function Home() {
     <div className="App bg-gradient-to-br from-slate-200 to-slate-800 h-screen">
       <p className="text-3xl font-sans flex justify-center">Mugi magic site</p>
       <SearchBar search={onSearch} />
-      {isLoading&& <p>Loading...</p>}
+      {isLoading && <div className="flex h-screen justify-center items-center"> <MoonLoader color="#d4d4d4"/></div>}
       {!isLoading && !manaLoading && !noData && <Card {...cardData}></Card>}
     </div>
   );
