@@ -1,15 +1,37 @@
-import React, { useRef } from "react";
+import React, { useRef,Fragment, useState } from "react";
+import SFListRequest from "../../types/SFListRequest";
+import SearchList from "./SearchList";
+
+
 type searchElement = {
   search: (data: string) => void;
 };
 const SearchBar = (props: searchElement) => {
   const searchBar = useRef<HTMLInputElement>(null);
+  const [searchArray,setSearchArray] = useState<string[]>([]);
+  const onSearchList = async(event: React.FormEvent<HTMLFormElement>)=>{
+    event.preventDefault();
+    const response = await fetch("https://api.scryfall.com/cards/search?" + new URLSearchParams({q:searchBar.current!.value}));
+    if(!response.ok){
+      setSearchArray([]);
+      return;
+    }
+    const json = await response.json().then((res:SFListRequest)=>{
+      return res;
+    })
+    setSearchArray(prevstate=>json.data.map(el=>el.name));
+    return;
+  };
+  const emptyArray =()=>{
+    setSearchArray([]);
+  }
   const searchHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     props.search(searchBar.current!.value);
   };
   return (
-    <form className="flex justify-center" onSubmit={searchHandler}>
+    <Fragment>
+    <form className="flex justify-center" onSubmit={searchHandler} onChange={onSearchList}>
       <div className="relative w-96 flex">
         <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
           <svg
@@ -45,6 +67,8 @@ const SearchBar = (props: searchElement) => {
         </button>
       </div>
     </form>
+    {!(searchArray.length==0) && <SearchList elements={searchArray} searchF={props.search} setArray={emptyArray}/>} 
+    </Fragment>
   );
 };
 export default SearchBar;

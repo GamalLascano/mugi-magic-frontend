@@ -5,6 +5,7 @@ import ScryfallRequest from "../types/ScryfallRequest";
 import Props from "../types/Props";
 import SFManaRequest from "../types/SFManaRequest";
 import Image from "next/image";
+import SearchList from "../components/searchbar/SearchList";
 import MoonLoader from "react-spinners/MoonLoader";
 
 export default function Home() {
@@ -25,22 +26,23 @@ export default function Home() {
     setCardData({ cardData: dataNew });
     setIsLoading(false);
     setNoData(false);
+    return;
   };
   const loadMana = async ()=>{
-
       const data = await fetch("https://api.scryfall.com/symbology");
       const json = await data.json().then((res: SFManaRequest) => {
         return res;
       });
     setManaSymbolArray(json);
     setManaLoading(false);
+    return;
   };
   useEffect(()=>{
     loadMana();
   },[]);
 
   return (
-    <div className="App bg-gradient-to-br from-slate-200 to-slate-800 h-screen">
+    <div className="App bg-gradient-to-br from-slate-200 to-slate-800 min-h-screen">
       <p className="text-3xl font-sans flex justify-center">Mugi magic site</p>
       <SearchBar search={onSearch} />
       {isLoading && <div className="flex h-screen justify-center items-center"> <MoonLoader color="#d4d4d4"/></div>}
