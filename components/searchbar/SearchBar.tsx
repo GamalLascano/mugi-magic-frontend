@@ -1,13 +1,12 @@
 import React, { useRef,Fragment, useState } from "react";
 import SFListRequest from "../../types/SFListRequest";
 import SearchList from "./SearchList";
+import { useRouter } from "next/router";
 
 
-type searchElement = {
-  search: (data: string) => void;
-};
-const SearchBar = (props: searchElement) => {
+const SearchBar = () => {
   const searchBar = useRef<HTMLInputElement>(null);
+  const router = useRouter();
   const [searchArray,setSearchArray] = useState<string[]>([]);
   const onSearchList = async(event: React.FormEvent<HTMLFormElement>)=>{
     event.preventDefault();
@@ -27,7 +26,7 @@ const SearchBar = (props: searchElement) => {
   }
   const searchHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    props.search(searchBar.current!.value);
+    router.push('/card/' + searchBar.current!.value);
   };
   return (
     <Fragment>
@@ -67,7 +66,7 @@ const SearchBar = (props: searchElement) => {
         </button>
       </div>
     </form>
-    {!(searchArray.length==0) && <SearchList elements={searchArray} searchF={props.search} setArray={emptyArray}/>} 
+    {!(searchArray.length==0) && <SearchList elements={searchArray}setArray={emptyArray}/>} 
     </Fragment>
   );
 };
