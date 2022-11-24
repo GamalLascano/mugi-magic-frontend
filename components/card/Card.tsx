@@ -1,8 +1,5 @@
 import Props from "../../types/Props";
 import Image from "next/image";
-import Link from "next/link";
-import SFManaRequest from "../../types/SFManaRequest";
-import { randomUUID } from "crypto";
 const Card = (card: Props) => {
   return (
     <section className="text-gray-600 body-font overflow-hidden">
