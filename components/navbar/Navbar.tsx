@@ -12,14 +12,14 @@ const Navbar = ()=>{
     className="rounded border-gray-200 bg-white px-2 py-2.5 dark:bg-gray-800 sm:px-4"
    >
     <div
-      className="grid grid-cols-4 container mx-auto flex flex-wrap items-center justify-between"
+      className="grid grid-cols-12 container mx-auto items-center justify-between"
     >
-      <div className="flex col-span-1 items-center">
+      <div className="flex col-span-3 items-center">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white"> 
           <Link href="/">Mugi magic site</Link>
            </span>
       </div>
-      <form className="relative col-span-3 flex md:order-1" onSubmit={onSubmit}>
+      <form className="relative col-span-8 flex md:order-1" onSubmit={onSubmit}>
         <input
           type="text"
           id="search-navbar"
@@ -47,6 +47,9 @@ const Navbar = ()=>{
           </svg>
         </button>
       </form>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-6 h-6 relative col-span-1 flex md:order-2 pl-1">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+    </svg>
     </div>
    </nav>
 }
