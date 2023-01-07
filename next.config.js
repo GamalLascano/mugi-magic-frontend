@@ -6,7 +6,13 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
+        hostname: "*.cloudfront.net",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "*.scryfall.io",
+        port: "",
       },
     ],
   },
