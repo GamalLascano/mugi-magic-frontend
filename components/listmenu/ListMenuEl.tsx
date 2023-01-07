@@ -1,7 +1,8 @@
+import Link from "next/link";
 const ListMenuEl = ({ name }: { name: String }) => {
   return (
     <li className="text-white text-lg py-1">
-      <a href="#">{name}</a>
+      <Link href={`/card/${name}`}>{name}</Link>
     </li>
   );
 };
