@@ -1,14 +1,32 @@
 import Props from "../../types/Props";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect, useCallback, useState } from "react";
 import { CardContext } from "../../pages/_app";
+import CardResponse from "../../types/CardResponse";
 const Card = (card: Props) => {
   const cardList = useContext(CardContext);
+  const [piruloPrice, setPiruloPrice] = useState("loading...");
+  const cardName = card.cardData!.name;
   const addToList = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    if (cardList.value.includes(card.cardData!.name)) return;
-    cardList.setValue(card.cardData!.name);
+    if (cardList.value.includes(cardName)) return;
+    cardList.setValue(cardName);
   };
+  const fetchPiruloPrice = useCallback(async () => {
+    const response = await fetch("/api/cards", {
+      body: JSON.stringify({ cardName: cardName }),
+      method: "POST",
+    });
+    const piruloPrice2 = await response.json().then((res: CardResponse) => {
+      return res.variants[0].stock == "Out of stock"
+        ? "Out of stock"
+        : res.variants[0].price;
+    });
+    setPiruloPrice(piruloPrice2);
+  }, [cardName]);
+  useEffect(() => {
+    fetchPiruloPrice();
+  }, [fetchPiruloPrice]);
   return (
     <section className="text-gray-600 body-font overflow-hidden">
       <div className="container px-5 py-24 mx-auto">
@@ -25,7 +43,7 @@ const Card = (card: Props) => {
               {card.cardData!.set_name}
             </h2>
             <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-              {card.cardData!.name}
+              {cardName}
               <button className="pl-4" onClick={addToList}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +119,7 @@ const Card = (card: Props) => {
             </div>
             <div className="flex mb-5">
               <span className="flex title-font font-medium text-2xl text-gray-900">
-                ARS 400.00
+                {piruloPrice}
               </span>
               <Image
                 alt="Logo pirulo"
@@ -112,7 +130,13 @@ const Card = (card: Props) => {
               ></Image>
               <div className="flex basis-36">
                 <button className="flex leading-normal text-white bg-blue-500 border-0 py-2 px-5 focus:outline-none hover:bg-blue-600 rounded">
-                  Buscar en Pirulo
+                  <a
+                    href={`https://www.mtgpirulo.com/products/search?q=${cardName}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Buscar en Pirulo
+                  </a>
                 </button>
               </div>
             </div>
